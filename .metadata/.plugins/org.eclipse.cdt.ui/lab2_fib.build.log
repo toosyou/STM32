@@ -1,0 +1,23 @@
+03:20:41 **** Incremental Build of configuration Debug for project lab2_fib ****
+make all 
+Building file: ../src/main.s
+Invoking: MCU GCC Assembler
+/Users/Evan/Project/STM32/lab2_fib/Debug
+arm-none-eabi-as -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -I"/Users/Evan/Project/STM32/lab2_fib/inc" -g -o "src/main.o" "../src/main.s"
+Finished building: ../src/main.s
+ 
+Building target: lab2_fib.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -T"/Users/Evan/Project/STM32/lab2_fib/LinkerScript.ld" -Wl,-Map=output.map -Wl,--gc-sections -lm -o "lab2_fib.elf" @"objects.list"  
+Finished building target: lab2_fib.elf
+ 
+/Applications/Xcode.app/Contents/Developer/usr/bin/make --no-print-directory post-build
+Generating binary and Printing size information:
+arm-none-eabi-objcopy -O binary "lab2_fib.elf" "lab2_fib.bin"
+arm-none-eabi-size "lab2_fib.elf"
+   text	   data	    bss	    dec	    hex	filename
+   1040	   1080	   1056	   3176	    c68	lab2_fib.elf
+ 
+
+03:20:42 Build Finished (took 299ms)
+

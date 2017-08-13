@@ -1,0 +1,32 @@
+05:38:22 **** Incremental Build of configuration Debug for project final ****
+make all 
+Building file: /Users/Evan/Project/micro_processor_HWs/final/main.c
+Invoking: MCU GCC Compiler
+/Users/Evan/Project/STM32/final/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DNUCLEO_L476RG -DSTM32 -DSTM32L476RGTx -DSTM32L4 -DDEBUG -I/Users/Evan/Project/STM32/final/inc -O0 -g3 -Wall -fmessage-length=0 -ffunction-sections -c -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "/Users/Evan/Project/micro_processor_HWs/final/main.c"
+In file included from /Users/Evan/Project/micro_processor_HWs/final/stm32l476xx.h:184:0,
+                 from /Users/Evan/Project/micro_processor_HWs/final/main.c:1:
+/Users/Evan/Project/micro_processor_HWs/final/core_cm4.h: In function 'NVIC_SystemReset':
+/Users/Evan/Project/micro_processor_HWs/final/core_cm4.h:1792:3: warning: implicit declaration of function '__DSB' [-Wimplicit-function-declaration]
+   __DSB();                                                          /* Ensure all outstanding memory accesses included
+   ^
+/Users/Evan/Project/micro_processor_HWs/final/core_cm4.h:1801:5: warning: implicit declaration of function '__NOP' [-Wimplicit-function-declaration]
+     __NOP();
+     ^
+Finished building: /Users/Evan/Project/micro_processor_HWs/final/main.c
+ 
+Building target: final.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -T"/Users/Evan/Project/STM32/final/LinkerScript.ld" -Wl,-Map=output.map -Wl,--gc-sections -lm -o "final.elf" @"objects.list"  
+Finished building target: final.elf
+ 
+/Applications/Xcode.app/Contents/Developer/usr/bin/make --no-print-directory post-build
+Generating binary and Printing size information:
+arm-none-eabi-objcopy -O binary "final.elf" "final.bin"
+arm-none-eabi-size "final.elf"
+   text	   data	    bss	    dec	    hex	filename
+   7384	   1104	   1312	   9800	   2648	final.elf
+ 
+
+05:38:22 Build Finished (took 535ms)
+

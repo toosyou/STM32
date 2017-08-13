@@ -1,0 +1,32 @@
+05:19:14 **** Incremental Build of configuration Debug for project lab6_2 ****
+make all 
+Building file: ../src/main.c
+Invoking: MCU GCC Compiler
+/Users/Evan/Project/STM32/lab6_2/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DNUCLEO_L476RG -DSTM32 -DSTM32L476RGTx -DSTM32L4 -DDEBUG -I"/Users/Evan/Project/STM32/lab6_2/inc" -O0 -g3 -Wall -fmessage-length=0 -ffunction-sections -c -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../src/stm32l476xx.h:184:0,
+                 from ../src/main.c:1:
+../src/core_cm4.h: In function 'NVIC_SystemReset':
+../src/core_cm4.h:1792:3: warning: implicit declaration of function '__DSB' [-Wimplicit-function-declaration]
+   __DSB();                                                          /* Ensure all outstanding memory accesses included
+   ^
+../src/core_cm4.h:1801:5: warning: implicit declaration of function '__NOP' [-Wimplicit-function-declaration]
+     __NOP();
+     ^
+Finished building: ../src/main.c
+ 
+Building target: lab6_2.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -T"/Users/Evan/Project/STM32/lab6_2/LinkerScript.ld" -Wl,-Map=output.map -Wl,--gc-sections -lm -o "lab6_2.elf" @"objects.list"  
+Finished building target: lab6_2.elf
+ 
+/Applications/Xcode.app/Contents/Developer/usr/bin/make --no-print-directory post-build
+Generating binary and Printing size information:
+arm-none-eabi-objcopy -O binary "lab6_2.elf" "lab6_2.bin"
+arm-none-eabi-size "lab6_2.elf"
+   text	   data	    bss	    dec	    hex	filename
+   1984	   1080	   1056	   4120	   1018	lab6_2.elf
+ 
+
+05:19:14 Build Finished (took 433ms)
+

@@ -1,0 +1,32 @@
+23:19:28 **** Incremental Build of configuration Debug for project lab9_2 ****
+make all 
+Building file: /Users/Evan/Project/micro_processor_HWs/Lab9_2src/main.c
+Invoking: MCU GCC Compiler
+/Users/Evan/Project/STM32/lab9_2/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DNUCLEO_L476RG -DSTM32 -DSTM32L476RGTx -DSTM32L4 -DDEBUG -I"/Users/Evan/Project/STM32/lab9_2/inc" -O0 -g3 -Wall -fmessage-length=0 -ffunction-sections -c -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "/Users/Evan/Project/micro_processor_HWs/Lab9_2src/main.c"
+In file included from /Users/Evan/Project/micro_processor_HWs/Lab9_2src/stm32l476xx.h:184:0,
+                 from /Users/Evan/Project/micro_processor_HWs/Lab9_2src/main.c:1:
+/Users/Evan/Project/micro_processor_HWs/Lab9_2src/core_cm4.h: In function 'NVIC_SystemReset':
+/Users/Evan/Project/micro_processor_HWs/Lab9_2src/core_cm4.h:1792:3: warning: implicit declaration of function '__DSB' [-Wimplicit-function-declaration]
+   __DSB();                                                          /* Ensure all outstanding memory accesses included
+   ^
+/Users/Evan/Project/micro_processor_HWs/Lab9_2src/core_cm4.h:1801:5: warning: implicit declaration of function '__NOP' [-Wimplicit-function-declaration]
+     __NOP();
+     ^
+Finished building: /Users/Evan/Project/micro_processor_HWs/Lab9_2src/main.c
+ 
+Building target: lab9_2.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -T"/Users/Evan/Project/STM32/lab9_2/LinkerScript.ld" -Wl,-Map=output.map -Wl,--gc-sections -lm -o "lab9_2.elf" @"objects.list"  
+Finished building target: lab9_2.elf
+ 
+/Applications/Xcode.app/Contents/Developer/usr/bin/make --no-print-directory post-build
+Generating binary and Printing size information:
+arm-none-eabi-objcopy -O binary "lab9_2.elf" "lab9_2.bin"
+arm-none-eabi-size "lab9_2.elf"
+   text	   data	    bss	    dec	    hex	filename
+   2024	   1160	   1080	   4264	   10a8	lab9_2.elf
+ 
+
+23:19:29 Build Finished (took 479ms)
+

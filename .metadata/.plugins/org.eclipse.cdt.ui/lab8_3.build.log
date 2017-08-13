@@ -1,0 +1,36 @@
+06:23:15 **** Incremental Build of configuration Debug for project lab8_3 ****
+make all 
+Building file: /Users/Evan/Project/micro_processor_HWs/Lab8_3src/main.c
+Invoking: MCU GCC Compiler
+/Users/Evan/Project/STM32/lab8_3/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DNUCLEO_L476RG -DSTM32 -DSTM32L476RGTx -DSTM32L4 -DDEBUG -I"/Users/Evan/Project/STM32/lab8_3/inc" -O0 -g3 -Wall -fmessage-length=0 -ffunction-sections -c -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "/Users/Evan/Project/micro_processor_HWs/Lab8_3src/main.c"
+In file included from /Users/Evan/Project/micro_processor_HWs/Lab8_3src/stm32l476xx.h:184:0,
+                 from /Users/Evan/Project/micro_processor_HWs/Lab8_3src/main.c:1:
+/Users/Evan/Project/micro_processor_HWs/Lab8_3src/core_cm4.h: In function 'NVIC_SystemReset':
+/Users/Evan/Project/micro_processor_HWs/Lab8_3src/core_cm4.h:1792:3: warning: implicit declaration of function '__DSB' [-Wimplicit-function-declaration]
+   __DSB();                                                          /* Ensure all outstanding memory accesses included
+   ^
+/Users/Evan/Project/micro_processor_HWs/Lab8_3src/core_cm4.h:1801:5: warning: implicit declaration of function '__NOP' [-Wimplicit-function-declaration]
+     __NOP();
+     ^
+/Users/Evan/Project/micro_processor_HWs/Lab8_3src/main.c: In function 'keypad_scan':
+/Users/Evan/Project/micro_processor_HWs/Lab8_3src/main.c:214:10: warning: variable 'yes_return' set but not used [-Wunused-but-set-variable]
+     bool yes_return = false;
+          ^
+Finished building: /Users/Evan/Project/micro_processor_HWs/Lab8_3src/main.c
+ 
+Building target: lab8_3.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -T"/Users/Evan/Project/STM32/lab8_3/LinkerScript.ld" -Wl,-Map=output.map -Wl,--gc-sections -lm -o "lab8_3.elf" @"objects.list"  
+Finished building target: lab8_3.elf
+ 
+/Applications/Xcode.app/Contents/Developer/usr/bin/make --no-print-directory post-build
+Generating binary and Printing size information:
+arm-none-eabi-objcopy -O binary "lab8_3.elf" "lab8_3.bin"
+arm-none-eabi-size "lab8_3.elf"
+   text	   data	    bss	    dec	    hex	filename
+   3232	   1080	   1136	   5448	   1548	lab8_3.elf
+ 
+
+06:23:16 Build Finished (took 488ms)
+

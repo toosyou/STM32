@@ -1,0 +1,47 @@
+.data
+	result: .word 0
+	max_size: .word 0
+.text
+	m: .word 0x6
+	n: .word 0x3
+	.global main
+
+main:
+	ldr r0, =m
+	ldr r0, [r0]
+	ldr r1, =n
+	ldr r1, [r1]
+	push {r0, r1}
+	bl GCD
+
+	program_end:
+		b program_end
+
+GCD:
+	//TODO: Implement your GCD function
+	pop {r0, r1} // a, b
+	push {lr}
+
+	// if b == 0, return a
+	cmp r1, #0
+	beq return
+
+	//a = a % b
+	//r0 = r0 % r1
+	//while r0 >= r1, r0 = r0 - r1
+	mod_while:
+		cmp r0, r1
+		blt done_mod
+		sub r0, r0, r1
+		b mod_while
+
+	done_mod:
+
+	push {r1, r0}
+	bl GCD // GCD(b, a % b)
+
+	return:
+		pop {r1}
+		mov lr, r1
+
+		BX LR

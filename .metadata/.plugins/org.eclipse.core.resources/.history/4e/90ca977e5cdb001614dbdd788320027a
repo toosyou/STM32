@@ -1,0 +1,138 @@
+#include "stm32l476xx.h"
+#include "core_cm4.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include "usart.h"
+#include "adc.h"
+#include "util.h"
+#include "74HC595.h"
+#include "util.h"
+
+typedef unsigned int bool;
+#define false 0
+#define true 1
+
+extern void delay(int ms);
+
+float voltage = 0.0f;
+
+void SysTickConfig(int tick){
+	SysTick->CTRL &= ~(SysTick_CTRL_ENABLE_Msk);
+	SysTick->LOAD = tick & SysTick_LOAD_RELOAD_Msk;
+	SysTick->VAL = 0;
+	SysTick->CTRL |= (SysTick_CTRL_CLKSOURCE_Msk);
+	SysTick->CTRL |= SysTick_CTRL_TICKINT_Msk;
+	SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;
+}
+
+void SysTick_Handler(){
+	convert_adc(ADC1);
+	return;
+}
+
+void ADC1_2_IRQHandler(void){
+	while(!(ADC1->ISR&ADC_ISR_EOC)); // wait for complete
+	float old_voltage = voltage;
+	const float voltage_max = 0.35f;
+	const float voltage_min = 0.245f;
+	const float ratio_old_voltage = 0.2f;
+	voltage = (float)read_adc(ADC1) / 4096.9f * 5.0f - voltage_min;
+	voltage /= voltage_max - voltage_min;
+	voltage = (1.0f - ratio_old_voltage)* voltage + ratio_old_voltage * old_voltage;
+	voltage = voltage > 1.0f ? 1.0f : voltage;
+	voltage = voltage < 0.0f ? 0.0 : voltage;
+	return;
+}
+
+void GPIO_Init(void) {
+	RCC->AHB2ENR |= RCC_AHB2ENR_GPIOAEN;
+	RCC->AHB2ENR |= RCC_AHB2ENR_GPIOCEN;
+
+	//pa0
+	gpio_set_alternate(GPIOA, 0);
+	gpio_set_high_speed(GPIOA, 0);
+	GPIOA->AFR[0] |= 0x00000001;
+	GPIOA->AFR[0] &= 0xFFFFFFF1;
+
+	// BUTTON	//PC13
+	GPIOC->MODER &= ~(0b11 << (13*2));
+	GPIOC->MODER |= (0b00 <<(13*2));
+	GPIOC->OSPEEDR &= ~(0b11 << (13*2));
+	GPIOC->OSPEEDR |= ~(0b01 << (13*2));
+	GPIOC->OTYPER &= ~(1 << 13);
+	GPIOC->PUPDR &= ~(0b11 << (13 * 2));
+}
+
+bool bottom_clicked(void){
+    static int debounce = 0;
+    if( (GPIOC->IDR & 0b10000000000000) == 0 ){ // pressing
+        debounce = debounce+1 > 500 ? 500 : debounce+1;
+    }
+    else{
+        if(debounce >= 500){
+            debounce = 0;
+            return true;
+        }
+        else
+            debounce = 0;
+    }
+    return false;
+}
+
+void InitializeTimer(uint32_t presc){
+
+	RCC->APB1ENR1 |= RCC_APB1ENR1_TIM2EN;
+	TIM2->CR1 &= 0xFFFFFF8F; // count up & Edge-aligned
+    TIM2->CR1 |= 0x80;
+
+	TIM2->ARR = (uint32_t)256;//Reload value
+	TIM2->PSC = (uint32_t)presc;//Prescaler
+	TIM2->EGR = TIM_EGR_UG;//Reinitialize the counter
+
+    TIM2->CCMR1 |= 6 << 4;
+    TIM2->CCMR1 |= 1 << 3;
+
+    TIM2->CCR1 = 500;
+
+    TIM2->CCER |= 1;
+    TIM2->BDTR |= 1<<15;
+    TIM2->CR1 |= TIM_CR1_CEN;
+}
+
+int main(){
+	SCB->CPACR |= (0xF << 20);
+	InitializeTimer(20);
+	GPIO_Init();
+	SysTickConfig(40000);
+	usart_init();
+	ADC_init();
+	HC595 ic;
+	ic.GPIO = GPIOA;
+	ic.clk_pin = 5;
+	ic.cs_pin = 6;
+	ic.data_pin = 7;
+	ic.reset_pin = 8;
+	HC595Init(ic);
+	//int data = 528;
+	int data = 0b10000;
+	while(1){
+		if(bottom_clicked() == true){
+			HC595Send(ic, data++);
+			HC595Reset(ic);
+		}
+		//for(int i=0;i<8;++i){
+			//HC595Send(ic, 1 << i);
+			//delay(1000);
+		//}
+
+		/*char message[50] = {0};
+		sprintf(message, "%f V\n", voltage);
+		UART_Transmit(USART1, message, strlen(message));
+
+		TIM2->CCR1 = (int)(256.0f * voltage);
+
+		delay(33);*/
+	}
+	return 0;
+}

@@ -1,0 +1,32 @@
+.data
+	result: .word 0
+	max_size: .word 0
+.text
+	m: .word 0x5E
+	n: .word 0x60
+	.global main
+
+main:
+	ldr r0, =m
+	ldr r1, =n
+	push {r0, r1}
+	bl GCD
+
+	program_end:
+		b program_end
+
+GCD:
+	//TODO: Implement your GCD function
+	pop {r0, r1} // a, b
+	cmp r1, #0
+	bne continue
+		pop {lr}
+		bx lr
+	continue:
+
+	mov r0, r0 mod r1 // a = a % b
+	push {lr}
+	push {r1, r0}
+	bl GCD
+
+	BX LR

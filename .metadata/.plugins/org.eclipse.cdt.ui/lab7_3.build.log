@@ -1,0 +1,36 @@
+08:49:55 **** Incremental Build of configuration Debug for project lab7_3 ****
+make all 
+Building file: ../src/main.c
+Invoking: MCU GCC Compiler
+/Users/Evan/Project/STM32/lab7_3/Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DNUCLEO_L476RG -DSTM32 -DSTM32L476RGTx -DSTM32L4 -DDEBUG -I"/Users/Evan/Project/STM32/lab7_3/inc" -O0 -g3 -Wall -fmessage-length=0 -ffunction-sections -c -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+In file included from ../src/stm32l476xx.h:184:0,
+                 from ../src/main.c:1:
+../src/core_cm4.h: In function 'NVIC_SystemReset':
+../src/core_cm4.h:1792:3: warning: implicit declaration of function '__DSB' [-Wimplicit-function-declaration]
+   __DSB();                                                          /* Ensure all outstanding memory accesses included
+   ^
+../src/core_cm4.h:1801:5: warning: implicit declaration of function '__NOP' [-Wimplicit-function-declaration]
+     __NOP();
+     ^
+../src/main.c: In function 'keypad_scan':
+../src/main.c:53:10: warning: variable 'yes_return' set but not used [-Wunused-but-set-variable]
+     bool yes_return = false;
+          ^
+Finished building: ../src/main.c
+ 
+Building target: lab7_3.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -T"/Users/Evan/Project/STM32/lab7_3/LinkerScript.ld" -Wl,-Map=output.map -Wl,--gc-sections -lm -o "lab7_3.elf" @"objects.list"  
+Finished building target: lab7_3.elf
+ 
+/Applications/Xcode.app/Contents/Developer/usr/bin/make --no-print-directory post-build
+Generating binary and Printing size information:
+arm-none-eabi-objcopy -O binary "lab7_3.elf" "lab7_3.bin"
+arm-none-eabi-size "lab7_3.elf"
+   text	   data	    bss	    dec	    hex	filename
+   2216	   1080	   1120	   4416	   1140	lab7_3.elf
+ 
+
+08:49:56 Build Finished (took 480ms)
+

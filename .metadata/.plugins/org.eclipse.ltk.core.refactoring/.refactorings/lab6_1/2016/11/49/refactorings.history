@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;lab6_1/src/max7219_send.s&apos; to &apos;max7219.s&apos;" description="Rename resource &apos;max7219_send.s&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/max7219_send.s" name="max7219.s" stamp="1480428448220" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;lab6_1/src/max7219.s&apos; to &apos;max7219_send.s&apos;" description="Rename resource &apos;max7219.s&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/max7219.s" name="max7219_send.s" stamp="1480428836914" updateReferences="true"/>
+</session>

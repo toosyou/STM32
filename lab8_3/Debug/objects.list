@@ -1,0 +1,5 @@
+"src/main.o"
+"src/max7219_init.o"
+"src/max7219_send.o"
+"startup/startup_stm32.o"
+"startup/sysmem.o"

@@ -1,0 +1,44 @@
+.syntax unified
+.cpu cortex-m4
+.thumb
+
+.data
+	#user_stack	.zero 128
+	expr_result	.word 0
+
+.text
+	.global main
+	postfix_expr .asciz “-100 10 20 + - 10 +”
+
+
+main:
+	LDR R0, =postfix_expr
+//TODO: Setup stack pointer to end of user_stack and calculate the expression using PUSH, POP operators, and store the result into expr_result
+	bl strlen
+
+	program_end:
+		B program_end
+strlen:
+//TODO: implement a “calculate the string length” function
+	//r0 : input string address
+	//r1 : length of the input string
+	push {r0, r2}
+	mov r1, 0
+	for_i:
+		mov r2, r0
+		add r2, r2, r1
+		ldrb r2, [r1]
+		//if str[i] == 0, return
+		cmp r2, 0
+		beq return
+		add r1, r1, 1
+		b for_i
+
+	retrun:
+		pop {r0, r2}
+		bx lr
+
+atoi:
+//TODO: implement a “convert string to integer” function
+
+	BX LR

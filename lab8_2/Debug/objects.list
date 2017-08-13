@@ -1,0 +1,6 @@
+"src/main.o"
+"src/max7219_init.o"
+"src/max7219_send.o"
+"src/stm32l4xx_ll_exti.o"
+"startup/startup_stm32.o"
+"startup/sysmem.o"

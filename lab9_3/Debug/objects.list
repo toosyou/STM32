@@ -1,0 +1,6 @@
+"src/Lab9_3src/delay.o"
+"src/Lab9_3src/ds18b20.o"
+"src/Lab9_3src/main.o"
+"src/Lab9_3src/onewire.o"
+"startup/startup_stm32.o"
+"startup/sysmem.o"

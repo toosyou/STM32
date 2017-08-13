@@ -1,0 +1,110 @@
+.syntax unified
+.cpu cortex-m4
+.thumb
+
+.data
+	user_stack:	.zero 128
+	expr_result: .word 0
+
+.text
+	.global main
+	postfix_expr: .asciz "-100 10 20 + - 10 +"
+
+
+main:
+	LDR R0, =postfix_expr
+//TODO: Setup stack pointer to end of user_stack and calculate the expression using PUSH, POP operators, and store the result into expr_result
+	ldr sp, =user_stack
+	mov r1, 1
+	push {r1}
+	mov r1, 2
+	push {r1}
+
+	program_end:
+		B program_end
+strlen:
+	//TODO: implement a “calculate the string length” function
+	//r0 : input string address
+	//r1 : length of the input string
+	push {r0, r2}
+	mov r1, 0
+	strlen_for_i:
+		mov r2, r0
+		add r2, r2, r1 // r2 = str + i
+		ldrb r2, [r2] // r2 = *r2 = str[i]
+		//if str[i] == 0, return
+		cmp r2, #0
+		beq strlen_return
+		add r1, r1, 1
+		b strlen_for_i
+
+	strlen_return:
+		pop {r0, r2}
+		bx lr
+
+atoi:
+	//TODO: implement a “convert string to integer” function
+	//r0: str, input string address
+	//r1: rtn, output integer
+	push {r2-r5}
+	push {r0}
+
+	mov r2, #0
+	//if str[0] == '+'/'-', r2 = 1/2.
+	//otherwise, r2 = 0
+	ldrb r3, [r0] // r3 = str[0]
+	cmp r3, #43 // +
+	bne atoi_no_mark_plus
+		mov r2, #1
+		b atoi_done_mark
+
+	atoi_no_mark_plus:
+	cmp r3, #45 // -
+	bne atoi_done_mark
+		mov r2, #2
+
+	atoi_done_mark:
+
+	//if r2 == 1 or 2, r0 += 1
+	cmp r2, #1
+	beq atoi_address_plus_one
+	cmp r2, #2
+	beq atoi_address_plus_one
+	b atoi_dont_plus_one
+
+	atoi_address_plus_one:
+		add r0, r0, #1 // str = str+1
+
+	atoi_dont_plus_one:
+	mov r4, #0 // i = 0
+	mov r1, #0 // rtn = 0
+	atoi_for_i: //
+		add r3, r0, r4 // r3 = str + i
+		ldrb r3, [r3] // r3 = str[i]
+		// if str[i] == ' ', return
+		cmp r3, #32 // ' '
+		beq atoi_return
+
+		// r1 = r1 * 10 + str[i] - 48
+		mov r5, #10
+		mul r1, r1, r5
+		add r1, r1, r3
+		sub r1, r1, #48
+
+		add r4, r4, #1
+		b atoi_for_i
+
+	atoi_return:
+	//if str[0] == '-', rtn = -rtn
+	//if r2 == 2, r1 = -r1
+	cmp r2, 2
+	bne atoi_final_return
+		mov r5, #0
+		sub r5, r5, #1 // r5 = -1
+		mul r1, r1, r5
+
+	atoi_final_return:
+	pop {r0}
+	pop {r2-r5}
+
+	BX LR

@@ -1,0 +1,23 @@
+00:42:39 **** Incremental Build of configuration Debug for project lab5_1 ****
+make all 
+Building file: ../src/main.s
+Invoking: MCU GCC Assembler
+/Users/Evan/Project/STM32/lab5_1/Debug
+arm-none-eabi-as -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -I"/Users/Evan/Project/STM32/lab5_1/inc" -g -o "src/main.o" "../src/main.s"
+Finished building: ../src/main.s
+ 
+Building target: lab5_1.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -T"/Users/Evan/Project/STM32/lab5_1/LinkerScript.ld" -Wl,-Map=output.map -Wl,--gc-sections -lm -o "lab5_1.elf" @"objects.list"  
+Finished building target: lab5_1.elf
+ 
+/Applications/Xcode.app/Contents/Developer/usr/bin/make --no-print-directory post-build
+Generating binary and Printing size information:
+arm-none-eabi-objcopy -O binary "lab5_1.elf" "lab5_1.bin"
+arm-none-eabi-size "lab5_1.elf"
+   text	   data	    bss	    dec	    hex	filename
+   1496	   1080	   1056	   3632	    e30	lab5_1.elf
+ 
+
+00:42:40 Build Finished (took 178ms)
+
